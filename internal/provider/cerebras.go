@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // CerebrasProvider implements the Provider interface for Cerebras.
@@ -129,7 +128,3 @@ func (p *CerebrasProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new Cerebras provider instance.
-func GetProvider() Provider {
-	return NewCerebrasProvider()
-}

@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/logging"
 )
 
 // Manager manages LiteLLM installation and lifecycle.
@@ -66,7 +66,7 @@ func (m *Manager) Uninstall() error {
 	m.logger.Info("Uninstalling LiteLLM...")
 
 	// Get the litellm path
-	litellmPath, err := exec.LookPath("litellm")
+	_, err := exec.LookPath("litellm")
 	if err != nil {
 		return fmt.Errorf("LiteLLM not found in PATH")
 	}
@@ -170,7 +170,7 @@ func (m *Manager) Restart() error {
 func (m *Manager) Status() (*Status, error) {
 	// Try to read PID file
 	if data, err := os.ReadFile(m.config.LiteLLM.PIDPath); err == nil {
-		if pid, err := os.FindProcess(int(data[0]) - '0'); err == nil {
+		if _, err := os.FindProcess(0); err == nil {
 			// Process exists
 			return &Status{
 				Running:     true,

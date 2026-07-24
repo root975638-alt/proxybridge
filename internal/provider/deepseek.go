@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // DeepSeekProvider implements the Provider interface for DeepSeek.
@@ -129,7 +128,3 @@ func (p *DeepSeekProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new DeepSeek provider instance.
-func GetProvider() Provider {
-	return NewDeepSeekProvider()
-}

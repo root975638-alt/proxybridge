@@ -2,15 +2,15 @@
 package diagnostic
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 	"time"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/credential"
-	"github.com/proxybridge/cli/internal/logging"
-	"github.com/proxybridge/cli/internal/provider"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/provider"
 )
 
 // Options holds diagnostic options
@@ -112,7 +112,7 @@ func RunAll(opts Options) error {
 
 	if opts.JSON {
 		// Output as JSON
-		data, _ := logging.JSONMarshal(report)
+		data, _ := json.Marshal(report)
 		fmt.Println(data)
 	}
 
@@ -393,9 +393,3 @@ type LiteLLMStatus struct {
 	Version   string
 }
 
-// TestAccess tests credential storage access
-func (m *credential.Manager) TestAccess() error {
-	// Placeholder for testing credential storage
-	// In production, would attempt a read/write test
-	return nil
-}

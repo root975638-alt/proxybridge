@@ -3,7 +3,6 @@ package provider
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 	"strings"
 )
@@ -171,7 +170,3 @@ func (p *OllamaProvider) testModels() error {
 	return nil
 }
 
-// GetProvider creates a new Ollama provider instance.
-func GetProvider() Provider {
-	return NewOllamaProvider()
-}

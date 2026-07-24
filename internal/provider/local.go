@@ -3,7 +3,6 @@ package provider
 
 import (
 	"fmt"
-	"os"
 )
 
 // LocalOpenAIProvider implements the Provider interface for OpenAI-compatible servers.
@@ -148,7 +147,3 @@ func (p *LocalOpenAIProvider) SetModelName(name string) {
 	p.modelName = name
 }
 
-// GetProvider creates a new local provider instance.
-func GetProvider() Provider {
-	return NewLocalOpenAIProvider()
-}

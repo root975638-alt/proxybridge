@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // TogetherAIProvider implements the Provider interface for Together AI.
@@ -135,7 +134,3 @@ func (p *TogetherAIProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new Together AI provider instance.
-func GetProvider() Provider {
-	return NewTogetherAIProvider()
-}

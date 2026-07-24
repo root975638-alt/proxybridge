@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // XAIProvider implements the Provider interface for xAI.
@@ -130,7 +129,3 @@ func (p *XAIProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new xAI provider instance.
-func GetProvider() Provider {
-	return NewXAIProvider()
-}

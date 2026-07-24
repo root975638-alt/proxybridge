@@ -3,7 +3,6 @@ package provider
 
 import (
 	"fmt"
-	"os"
 )
 
 // LMStudioProvider implements the Provider interface for LM Studio.
@@ -129,7 +128,3 @@ func (p *LMStudioProvider) SetBaseURL(url string) {
 	p.baseURL = url
 }
 
-// GetProvider creates a new LM Studio provider instance.
-func GetProvider() Provider {
-	return NewLMStudioProvider()
-}

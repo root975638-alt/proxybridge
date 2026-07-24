@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/spf13/viper"
 	"gopkg.in/yaml.v3"
 )
 
@@ -93,11 +93,13 @@ type Settings struct {
 
 // LiteLLMConfig holds LiteLLM-specific configuration
 type LiteLLMConfig struct {
-	Path           string `yaml:"path"`
-	ConfigPath     string `yaml:"config_path"`
+	Path            string `yaml:"path"`
+	ConfigPath      string `yaml:"config_path"`
 	EnvironmentPath string `yaml:"environment_path"`
-	LogPath        string `yaml:"log_path"`
-	PIDPath        string `yaml:"pid_path"`
+	LogPath         string `yaml:"log_path"`
+	PIDPath         string `yaml:"pid_path"`
+	ListenAddress   string `yaml:"listen_address"`
+	Port            int    `yaml:"port"`
 }
 
 // ClaudeConfig holds Claude Code configuration
@@ -247,9 +249,7 @@ func (c *Config) Validate() error {
 		c.LiteLLM.Path = "litellm"
 	}
 
-	if c.LiteLLM.Port == 0 {
-		c.LiteLLM.Port = 4000
-	}
+	// LiteLLM port is now configured via Settings.Port
 
 	return nil
 }
@@ -282,7 +282,8 @@ func NewConfig() *Config {
 		ActiveProvider: "default",
 		DefaultModel:   "claude-3-5-sonnet",
 		LiteLLM: LiteLLMConfig{
-			Port: 4000,
+			ListenAddress: "127.0.0.1",
+			Port:          4000,
 		},
 		ClaudeCode: ClaudeConfig{
 			Enabled:     true,
@@ -316,6 +317,4 @@ func isMacOS() bool {
 }
 
 // GetLogger returns a configured logger instance
-func (c *Config) GetLogger() *Logger {
-	return NewLogger(c.Settings.LogLevel, c.Settings.JSONOutput)
-}
+// Deprecated: Use logging package directly with logging.Init()

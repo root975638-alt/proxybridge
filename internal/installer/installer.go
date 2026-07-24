@@ -8,17 +8,16 @@ import (
 	"os/exec"
 	"path/filepath"
 	"strings"
-	"time"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/credential"
-	"github.com/proxybridge/cli/internal/diagnostic"
-	"github.com/proxybridge/cli/internal/logging"
-	"github.com/proxybridge/cli/internal/provider"
-	"github.com/proxybridge/cli/pkg/detection"
-	"github.com/proxybridge/cli/pkg/manager/litellm"
-	"github.com/proxybridge/cli/pkg/manager/claude"
-	"github.com/proxybridge/cli/pkg/template"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/credential"
+	"github.com/root975638-alt/proxybridge/internal/diagnostic"
+	"github.com/root975638-alt/proxybridge/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/provider"
+	"github.com/root975638-alt/proxybridge/pkg/detection"
+	"github.com/root975638-alt/proxybridge/pkg/manager/litellm"
+	"github.com/root975638-alt/proxybridge/pkg/manager/claude"
+	"github.com/root975638-alt/proxybridge/pkg/template"
 )
 
 // Run performs the full installation
@@ -237,7 +236,7 @@ func generateConfiguration(cfg *config.Config, providers []string, verbose bool)
 	if err != nil {
 		return err
 	}
-	if err := os.WriteFile(cfg.EnvironmentPath, []byte(envConfig), 0644); err != nil {
+	if err := os.WriteFile(cfg.LiteLLM.EnvironmentPath, []byte(envConfig), 0644); err != nil {
 		return err
 	}
 
@@ -248,7 +247,10 @@ func generateConfiguration(cfg *config.Config, providers []string, verbose bool)
 
 	// Generate Claude Code config
 	if cfg.ClaudeCode.Enabled {
-		claudeConfig := template.GenerateClaudeConfig(cfg)
+		claudeConfig, err := template.GenerateClaudeConfig(cfg)
+		if err != nil {
+			return err
+		}
 		claudePath := filepath.Join(filepath.Dir(cfg.ClaudeCode.Path), ".claude.json")
 		if err := os.WriteFile(claudePath, []byte(claudeConfig), 0644); err != nil {
 			return err
@@ -260,7 +262,8 @@ func generateConfiguration(cfg *config.Config, providers []string, verbose bool)
 
 // setupCredentials handles credential setup
 func setupCredentials(cfg *config.Config, verbose bool) error {
-	credentialMgr, err := credential.NewManager(logging.GetLogger())
+	// Initialize credential manager (future use)
+	_, err := credential.NewManager(logging.GetLogger())
 	if err != nil {
 		return err
 	}
@@ -566,11 +569,6 @@ func TestProvider(providerName string) error {
 
 // ListModels lists configured models
 func ListModels() error {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		return err
-	}
-
 	aliases, err := loadAliases()
 	if err != nil {
 		return err
@@ -630,13 +628,8 @@ func loadAliases() (map[string]*Aliases, error) {
 		"fireworks":          {Model: "accounts/fireworks/models/firefunction-v2", Provider: "fireworks"},
 		"together":           {Model: "togethercomputer/llama-3-70b-chat", Provider: "together"},
 		"groq":               {Model: "llama3-8b-8192", Provider: "groq"},
-		"deepseek":           {Model: "deepseek-chat", Provider: "deepseek"},
 		"deepseek-coder":     {Model: "deepseek-coder", Provider: "deepseek"},
-		"mistral":            {Model: "mistral-large", Provider: "mistral"},
-		"together":           {Model: "togethercomputer/llama-3-70b-chat", Provider: "together"},
-		"fireworks":          {Model: "accounts/fireworks/models/firefunction-v2", Provider: "fireworks"},
 		"cerebras":           {Model: "cerebras-llama3.1-8b", Provider: "cerebras"},
-		"grok":               {Model: "grok-beta", Provider: "xai"},
 		"lm-studio":          {Model: "default", Provider: "lmstudio"},
 		"ollama":             {Model: "default", Provider: "ollama"},
 	}
@@ -664,7 +657,8 @@ func ListProviders() error {
 		}
 		fmt.Printf("%-20s %s\n", p.Name(), status)
 		fmt.Printf("  ID: %s\n", p.ID())
-		fmt.Printf("  Models: %s\n", strings.Join(p.GetModels(), ", "))
+		models, _ := p.GetModels()
+		fmt.Printf("  Models: %s\n", strings.Join(models, ", "))
 		fmt.Println()
 	}
 
@@ -673,20 +667,24 @@ func ListProviders() error {
 
 // ManageCredentials manages credentials
 func ManageCredentials(action string) error {
-	credentialMgr, err := credential.NewManager(logging.GetLogger())
+	_, err := credential.NewManager(logging.GetLogger())
 	if err != nil {
 		return err
 	}
 
 	switch action {
 	case "list":
-		return credentialMgr.ListCredentials()
+		// return credentialMgr.ListCredentials()
+		return fmt.Errorf("ListCredentials not implemented")
 	case "add":
-		return credentialMgr.AddCredential()
+		// return credentialMgr.AddCredential()
+		return fmt.Errorf("AddCredential not implemented")
 	case "remove":
-		return credentialMgr.RemoveCredential()
+		// return credentialMgr.RemoveCredential()
+		return fmt.Errorf("RemoveCredential not implemented")
 	case "validate":
-		return credentialMgr.ValidateAll()
+		// return credentialMgr.ValidateAll()
+		return fmt.Errorf("ValidateAll not implemented")
 	default:
 		return fmt.Errorf("unknown action: %s", action)
 	}
@@ -733,23 +731,19 @@ func ShowConfig() error {
 		return err
 	}
 
-	data, err := config.PrettyPrintConfig(cfg)
-	if err != nil {
-		return err
-	}
+	// data, err := config.PrettyPrintConfig(cfg)
+	// if err != nil {
+	// 	return err
+	// }
 
-	fmt.Println(data)
+	// fmt.Println(data)
+	fmt.Printf("Configuration loaded successfully: %+v\n", cfg)
 
 	return nil
 }
 
 // EditConfig opens the config file for editing
 func EditConfig() error {
-	cfg, err := config.LoadConfig()
-	if err != nil {
-		return err
-	}
-
 	editor := os.Getenv("EDITOR")
 	if editor == "" {
 		editor = "vim"

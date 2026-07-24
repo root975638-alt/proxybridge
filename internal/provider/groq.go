@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // GroqProvider implements the Provider interface for Groq.
@@ -134,7 +133,3 @@ func (p *GroqProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new Groq provider instance.
-func GetProvider() Provider {
-	return NewGroqProvider()
-}

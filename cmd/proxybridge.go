@@ -12,13 +12,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/diagnostic"
-	"github.com/proxybridge/cli/internal/exportimport"
-	"github.com/proxybridge/cli/internal/installer"
-	"github.com/proxybridge/cli/internal/logging"
-	"github.com/proxybridge/cli/internal/provider"
-	"github.com/proxybridge/cli/internal/util"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/diagnostic"
+	"github.com/root975638-alt/proxybridge/internal/exportimport"
+	"github.com/root975638-alt/proxybridge/internal/installer"
+	"github.com/root975638-alt/proxybridge/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/util"
 	"github.com/spf13/cobra"
 )
 
@@ -63,11 +62,12 @@ var (
 
 			// Set config path if specified
 			if rootArgs.configPath != "" {
-				_, err := config.SetCustomConfigPath(rootArgs.configPath)
-				if err != nil {
-					logging.Error("Failed to set custom config path", "error", err)
-					os.Exit(1)
-				}
+				// _, err := config.SetCustomConfigPath(rootArgs.configPath)
+				// if err != nil {
+				// 	logging.Error("Failed to set custom config path", "error", err)
+				// 	os.Exit(1)
+				// }
+				logging.Warn("Custom config path not currently supported", "path", rootArgs.configPath)
 			}
 
 			// Validate config directory exists

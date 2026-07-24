@@ -6,8 +6,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/provider"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/provider"
 )
 
 // GenerateLiteLLMConfig generates the LiteLLM configuration
@@ -72,7 +72,7 @@ ClaudeCodeModel: "{{ .DefaultModel }}"
 }
 
 // GenerateClaudeConfig generates the Claude Code configuration
-func GenerateClaudeConfig(cfg *config.Config) string {
+func GenerateClaudeConfig(cfg *config.Config) (string, error) {
 	tmpl := `{
   "models": [
     {
@@ -191,7 +191,7 @@ echo "Starting LiteLLM on $HOST:$PORT..."
 }
 
 // renderTemplate renders a template with the config
-func renderTemplate(tmplStr string, cfg *config.Config) (string, error) {
+func renderTemplate(tmplStr string, data interface{}) (string, error) {
 	tmpl, err := template.New("config").Funcs(template.FuncMap{
 		"upper": strings.ToUpper,
 	}).Parse(tmplStr)
@@ -200,28 +200,44 @@ func renderTemplate(tmplStr string, cfg *config.Config) (string, error) {
 	}
 
 	var buf strings.Builder
-	if err := tmpl.Execute(&buf, cfg); err != nil {
+	if err := tmpl.Execute(&buf, data); err != nil {
 		return "", err
 	}
 
 	return buf.String(), nil
 }
 
+// ProviderConfig holds provider configuration for templates
+type ProviderConfig struct {
+	Name              string
+	ID                string
+	DefaultModel      string
+	APIKeyPlaceholder string
+	Settings          map[string]string
+}
+
 // GenerateProviderConfig generates a provider configuration
-func GenerateProviderConfig(provider *provider.Provider) (string, error) {
+func GenerateProviderConfig(p provider.Provider) (string, error) {
+	cfg := &ProviderConfig{
+		Name:              p.Name(),
+		ID:                p.ID(),
+		DefaultModel:      p.GetDefaultModel(),
+		APIKeyPlaceholder: fmt.Sprintf("%s_API_KEY", strings.ToUpper(p.ID())),
+		Settings:          p.GetConfig(),
+	}
+
 	tmpl := `# Provider: {{ .Name }}
 # ID: {{ .ID }}
-# Version: {{ .Version }}
+# Default Model: {{ .DefaultModel }}
 
-{{ .ID | upper }}_API_KEY="{{ .APIKeyPlaceholder }}"
-{{ .ID | upper }}_MODEL="{{ .DefaultModel }}"
+{{ .ID | upper }}_API_KEY={{ .APIKeyPlaceholder }}
 
 # Provider-Specific Settings
 {{- range $key, $value := .Settings }}
 {{ $key }}={{ $value }}
 {{- end }}
 `
-	return renderTemplate(tmpl, provider)
+	return renderTemplate(tmpl, cfg)
 }
 
 // GenerateModelAliasConfig generates the model alias configuration
@@ -246,7 +262,7 @@ func GenerateModelAliasConfig(cfg *config.Config, aliases map[string]string) (st
 }
 
 // GenerateConfigReport generates a validation report
-func GenerateConfigReport(issues []string, warnings []string) string {
+func GenerateConfigReport(issues []string, warnings []string) (string, error) {
 	tmpl := `# ProxyBridge Configuration Report
 # Generated: {{ .Timestamp }}
 

@@ -128,7 +128,7 @@ func GetProvider() *MyProvider {
 Add to `internal/provider/registry.go`:
 
 ```go
-import "github.com/proxybridge/cli/internal/provider/myprovider"
+import "github.com/root975638-alt/proxybridge/internal/provider/myprovider"
 
 // In registerProvidersInRegistry():
 _ = reg.RegisterProvider(myprovider.GetProvider())

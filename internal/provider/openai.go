@@ -145,7 +145,3 @@ func (p *OpenAIProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new OpenAI provider instance.
-func GetProvider() Provider {
-	return NewOpenAIProvider()
-}

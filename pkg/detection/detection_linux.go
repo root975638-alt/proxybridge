@@ -5,6 +5,7 @@
 package detection
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -158,7 +159,7 @@ func detectFedoraVersion() string {
 
 // detectArchVersion returns the Arch version
 func detectArchVersion() string {
-	if data, err := os.ReadFile("/etc/arch-release"); err == nil {
+	if _, err := os.ReadFile("/etc/arch-release"); err == nil {
 		return "rolling"
 	}
 	return "unknown"

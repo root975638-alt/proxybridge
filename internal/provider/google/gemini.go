@@ -4,7 +4,6 @@ package google
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // GoogleGeminiProvider implements the Provider interface for Google Gemini.

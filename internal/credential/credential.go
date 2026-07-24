@@ -12,10 +12,12 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
+	"time"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/logging"
 )
 
 const (
@@ -286,7 +288,7 @@ func validateAWS(m *Manager) error {
 
 // validateGoogle validates Google credentials
 func validateGoogle(m *Manager) error {
-	apiKey, err := m.GetCredential("google", "api_key")
+	_, err := m.GetCredential("google", "api_key")
 	if err != nil {
 		// Google uses service account JSON instead
 		_, err := m.GetCredential("google", "service_account")
@@ -434,7 +436,7 @@ func (m *Manager) encryptValue(value string) (string, error) {
 	}
 
 	// Pad the value
-	value = padPKCS7([]byte(value), aes.BlockSize)
+	paddedValue := padPKCS7([]byte(value), aes.BlockSize)
 
 	// Create cipher
 	block, err := aes.NewCipher(m.masterKey)
@@ -443,9 +445,9 @@ func (m *Manager) encryptValue(value string) (string, error) {
 	}
 
 	// Encrypt
-	ciphertext := make([]byte, len(value))
+	ciphertext := make([]byte, len(paddedValue))
 	mode := cipher.NewCBCEncrypter(block, iv)
-	mode.CryptBlocks(ciphertext, value)
+	mode.CryptBlocks(ciphertext, paddedValue)
 
 	// Combine IV and ciphertext
 	result := append(iv, ciphertext...)

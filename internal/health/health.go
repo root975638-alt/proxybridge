@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/credential"
-	"github.com/proxybridge/cli/internal/logging"
-	"github.com/proxybridge/cli/internal/provider"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/credential"
+	"github.com/root975638-alt/proxybridge/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/provider"
 )
 
 // HealthCheck represents a single health check result.

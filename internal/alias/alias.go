@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 
-	"github.com/proxybridge/cli/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/config"
 	"gopkg.in/yaml.v3"
 )
 
@@ -423,20 +422,6 @@ func (m *Manager) getDefaultAliases() map[string]*Alias {
 			Provider: "deepseek",
 			Enabled:  true,
 			Notes:    "DeepSeek Coder",
-		},
-		"together": {
-			Name:     "together",
-			Model:    "togethercomputer/llama-3-70b-chat",
-			Provider: "together",
-			Enabled:  true,
-			Notes:    "Together AI Chat",
-		},
-		"fireworks": {
-			Name:     "fireworks",
-			Model:    "accounts/fireworks/models/firefunction-v2",
-			Provider: "fireworks",
-			Enabled:  true,
-			Notes:    "Fireworks AI Function",
 		},
 		"cerebras": {
 			Name:     "cerebras",

@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // MistralProvider implements the Provider interface for Mistral AI.
@@ -134,7 +133,3 @@ func (p *MistralProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new Mistral provider instance.
-func GetProvider() Provider {
-	return NewMistralProvider()
-}

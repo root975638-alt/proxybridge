@@ -6,6 +6,11 @@ import (
 	"regexp"
 	"runtime"
 	"strings"
+
+	// Import subpackage providers
+	"github.com/root975638-alt/proxybridge/internal/provider/aws"
+	"github.com/root975638-alt/proxybridge/internal/provider/google"
+	"github.com/root975638-alt/proxybridge/internal/provider/azure"
 )
 
 // Provider is the interface that all providers must implement.
@@ -79,6 +84,46 @@ func (r *ProviderRegistry) GetAllProviders() []Provider {
 	return providers
 }
 
+// getAllProviderNames returns all provider names
+func (r *ProviderRegistry) getAllProviderNames() []string {
+	providers := r.GetAllProviders()
+	names := make([]string, 0, len(providers))
+	for _, p := range providers {
+		names = append(names, p.Name())
+	}
+	return names
+}
+
+// validateProvider validates a provider by ID
+func (r *ProviderRegistry) validateProvider(id string) error {
+	provider := r.GetProvider(id)
+	if provider == nil {
+		return fmt.Errorf("provider not found: %s", id)
+	}
+	return provider.Validate()
+}
+
+// installProvider installs a provider by ID
+func (r *ProviderRegistry) installProvider(id string) error {
+	provider := r.GetProvider(id)
+	if provider == nil {
+		return fmt.Errorf("provider not found: %s", id)
+	}
+	return provider.Install()
+}
+
+// uninstallProvider uninstalls a provider by ID
+func (r *ProviderRegistry) uninstallProvider(id string) error {
+	provider := r.GetProvider(id)
+	if provider == nil {
+		return fmt.Errorf("provider not found: %s", id)
+	}
+	return provider.Uninstall()
+}
+
+// registry is the global provider registry
+var registry = NewProviderRegistry()
+
 // GetAvailableProviders returns all available providers
 func GetAvailableProviders() []Provider {
 	return registry.GetAllProviders()
@@ -108,11 +153,11 @@ func NewManager() (*Manager, error) {
 func (m *Manager) registerDefaultProviders() error {
 	// List of default providers to register
 	defaultProviders := []Provider{
-		&AWSBedrockProvider{},
+		aws.NewAWSBedrockProvider(),
 		&OpenAIProvider{},
-		&AzureOpenAIProvider{},
+		azure.NewAzureOpenAIProvider(),
 		&AnthropicProvider{},
-		&GoogleGeminiProvider{},
+		google.NewGoogleGeminiProvider(),
 		&OpenRouterProvider{},
 		&OllamaProvider{},
 		&GroqProvider{},
@@ -261,4 +306,18 @@ func GetProviderStatus(p Provider) ProviderStatus {
 	}
 
 	return status
+}
+
+// Wrapper functions for subpackage providers
+
+func newAWSBedrockProvider() Provider {
+	return aws.NewAWSBedrockProvider()
+}
+
+func newGoogleGeminiProvider() Provider {
+	return google.NewGoogleGeminiProvider()
+}
+
+func newAzureOpenAIProvider() Provider {
+	return azure.NewAzureOpenAIProvider()
 }

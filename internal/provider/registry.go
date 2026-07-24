@@ -19,8 +19,8 @@ func registerProviders() {
 		// Cloud providers
 		NewOpenAIProvider(),
 		NewAnthropicProvider(),
-		NewAzureOpenAIProvider(),
-		NewGoogleGeminiProvider(),
+		newAzureOpenAIProvider(),
+		newGoogleGeminiProvider(),
 		NewOpenRouterProvider(),
 		NewXAIProvider(),
 
@@ -38,7 +38,7 @@ func registerProviders() {
 		NewLocalOpenAIProvider(),
 
 		// AWS-specific
-		NewAWSBedrockProvider(),
+		newAWSBedrockProvider(),
 	}
 
 	for _, p := range providers {
@@ -60,8 +60,8 @@ func registerProvidersInRegistry(reg *ProviderRegistry) {
 	// Cloud providers
 	_ = reg.RegisterProvider(NewOpenAIProvider())
 	_ = reg.RegisterProvider(NewAnthropicProvider())
-	_ = reg.RegisterProvider(NewAzureOpenAIProvider())
-	_ = reg.RegisterProvider(NewGoogleGeminiProvider())
+	_ = reg.RegisterProvider(newAzureOpenAIProvider())
+	_ = reg.RegisterProvider(newGoogleGeminiProvider())
 	_ = reg.RegisterProvider(NewOpenRouterProvider())
 	_ = reg.RegisterProvider(NewXAIProvider())
 
@@ -79,7 +79,7 @@ func registerProvidersInRegistry(reg *ProviderRegistry) {
 	_ = reg.RegisterProvider(NewLocalOpenAIProvider())
 
 	// AWS-specific
-	_ = reg.RegisterProvider(NewAWSBedrockProvider())
+	_ = reg.RegisterProvider(newAWSBedrockProvider())
 }
 
 // GetProvider returns a provider by ID
@@ -94,20 +94,20 @@ func GetAllProviders() []Provider {
 
 // GetProviderNames returns all provider names
 func GetProviderNames() []string {
-	return Registry.GetProviderNames()
+	return Registry.getAllProviderNames()
 }
 
 // ValidateProvider validates a provider by ID
 func ValidateProvider(id string) error {
-	return Registry.ValidateProvider(id)
+	return Registry.validateProvider(id)
 }
 
 // InstallProvider installs a provider by ID
 func InstallProvider(id string) error {
-	return Registry.InstallProvider(id)
+	return Registry.installProvider(id)
 }
 
 // UninstallProvider uninstalls a provider by ID
 func UninstallProvider(id string) error {
-	return Registry.UninstallProvider(id)
+	return Registry.uninstallProvider(id)
 }

@@ -4,7 +4,6 @@ package provider
 import (
 	"fmt"
 	"os"
-	"strings"
 )
 
 // OpenRouterProvider implements the Provider interface for OpenRouter.
@@ -139,7 +138,3 @@ func (p *OpenRouterProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new OpenRouter provider instance.
-func GetProvider() Provider {
-	return NewOpenRouterProvider()
-}

@@ -4,9 +4,8 @@ package aws
 import (
 	"fmt"
 	"os"
-	"strings"
 
-	"github.com/proxybridge/cli/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/logging"
 )
 
 // AWSBedrockProvider implements the Provider interface for AWS Bedrock.

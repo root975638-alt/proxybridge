@@ -3,8 +3,8 @@ package litellm
 import (
 	"testing"
 
-	"github.com/proxybridge/cli/internal/config"
-	"github.com/proxybridge/cli/internal/logging"
+	"github.com/root975638-alt/proxybridge/internal/config"
+	"github.com/root975638-alt/proxybridge/internal/logging"
 )
 
 func TestManager_IsInstalled(t *testing.T) {

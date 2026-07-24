@@ -15,7 +15,7 @@ import (
 // secretServiceStore stores a credential using Secret Service API (libsecret)
 func secretServiceStore(provider, key, value string) (bool, error) {
 	// Try to use secret-tool if available
-	secretToolPath, err := exec.LookPath("secret-tool")
+	_, err := exec.LookPath("secret-tool")
 	if err != nil {
 		return false, nil // Fall back to file storage
 	}
@@ -49,7 +49,7 @@ func secretServiceStore(provider, key, value string) (bool, error) {
 
 // secretServiceGet retrieves a credential using Secret Service API
 func secretServiceGet(provider, key string) (string, error) {
-	secretToolPath, err := exec.LookPath("secret-tool")
+	_, err := exec.LookPath("secret-tool")
 	if err != nil {
 		return "", nil // Fall back to file storage
 	}
@@ -71,7 +71,7 @@ func secretServiceGet(provider, key string) (string, error) {
 
 // secretServiceDelete deletes a credential using Secret Service API
 func secretServiceDelete(provider, key string) error {
-	secretToolPath, err := exec.LookPath("secret-tool")
+	_, err := exec.LookPath("secret-tool")
 	if err != nil {
 		return nil // Fall back to file storage
 	}
@@ -93,7 +93,7 @@ func secretServiceDelete(provider, key string) error {
 
 // passStoreStore stores a credential using the pass password manager
 func passStoreStore(provider, key, value string) (bool, error) {
-	passPath, err := exec.LookPath("pass")
+	_, err := exec.LookPath("pass")
 	if err != nil {
 		return false, nil
 	}
@@ -108,7 +108,7 @@ func passStoreStore(provider, key, value string) (bool, error) {
 	secretPath := fmt.Sprintf("proxybridge/%s/%s", provider, key)
 
 	// Create directory structure if needed
-	dirPath := fmt.Sprintf("proxybridge/%s", provider)
+	_ = fmt.Sprintf("proxybridge/%s", provider)
 	cmd := exec.Command("pass", "init", "-p", provider)
 	cmd.Dir = passDir
 	if err := cmd.Run(); err != nil && !strings.Contains(string(err.Error()), "already exists") {
@@ -129,7 +129,7 @@ func passStoreStore(provider, key, value string) (bool, error) {
 
 // passStoreGet retrieves a credential using the pass password manager
 func passStoreGet(provider, key string) (string, error) {
-	passPath, err := exec.LookPath("pass")
+	_, err := exec.LookPath("pass")
 	if err != nil {
 		return "", nil
 	}
@@ -150,7 +150,7 @@ func passStoreGet(provider, key string) (string, error) {
 
 // passStoreDelete deletes a credential using the pass password manager
 func passStoreDelete(provider, key string) error {
-	passPath, err := exec.LookPath("pass")
+	_, err := exec.LookPath("pass")
 	if err != nil {
 		return nil
 	}

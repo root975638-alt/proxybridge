@@ -139,7 +139,3 @@ func (p *AnthropicProvider) testAPIKey(apiKey string) error {
 	return nil
 }
 
-// GetProvider creates a new Anthropic provider instance.
-func GetProvider() Provider {
-	return NewAnthropicProvider()
-}

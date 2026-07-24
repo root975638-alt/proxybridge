@@ -1,4 +1,4 @@
-module github.com/proxybridge/cli
+module github.com/root975638-alt/proxybridge
 
 go 1.23
 
