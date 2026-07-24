@@ -158,9 +158,3 @@ feat(provider): add support for OpenRouter
 - Open a GitHub issue at https://github.com/root975638-alt/proxybridge/issues
 - Email maintainers at anand.damdiyal@proxybridge.dev
 
-## Recognition
-
-Contributors are recognized in:
-- `AUTHORS` file
-- Release notes
-- README contributors section

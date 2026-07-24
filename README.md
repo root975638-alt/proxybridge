@@ -273,7 +273,6 @@ SOFTWARE.
 ## Acknowledgments
 
 - [LiteLLM](https://github.com/BerriAI/litellm) - The excellent proxy server that powers ProxyBridge
-- All contributors and users of ProxyBridge
 
 ## Repository
 

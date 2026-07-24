@@ -7,12 +7,6 @@
 
 ---
 
-## ProxyBridge
-
-A production-grade CLI that enables Claude Code to work with any LLM provider through LiteLLM.
-
-**Repository**: https://github.com/root975638-alt/proxybridge
-**License**: MIT
 
 ## Contributors
 
