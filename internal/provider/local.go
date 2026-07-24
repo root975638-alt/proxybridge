@@ -1,5 +1,5 @@
 // Package local provides the Local OpenAI-compatible provider for ProxyBridge.
-package local
+package provider
 
 import (
 	"fmt"
@@ -149,6 +149,6 @@ func (p *LocalOpenAIProvider) SetModelName(name string) {
 }
 
 // GetProvider creates a new local provider instance.
-func GetProvider() *LocalOpenAIProvider {
+func GetProvider() Provider {
 	return NewLocalOpenAIProvider()
 }

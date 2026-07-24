@@ -1,4 +1,4 @@
-package openai
+package provider
 
 import (
 	"os"

@@ -1,8 +1,7 @@
 # ProxyBridge
 
-[![CI](https://github.com/root975638-alt/proxybridge/actions/workflows/ci.yml)](https://github.com/root975638-alt/proxybridge/actions)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Go Version](https://img.shields.io/github/go-mod/go-version/root975638-alt/proxybridge.svg)](go.mod)
+[![Go Version](https://img.shields.io/badge/go-1.23-green.svg)](https://golang.org)
 
 ProxyBridge is a production-grade CLI that enables Claude Code to work with any LLM provider through LiteLLM, providing a universal interface and model aliasing system.
 
@@ -12,8 +11,8 @@ ProxyBridge acts as a universal proxy between Claude Code and any LLM provider. 
 
 **Key Features:**
 - Universal LLM proxy through LiteLLM
-- Support for 20+ LLM providers
-- Model aliasing system (use memorable names)
+- Support for 20+ LLM providers (OpenAI, Anthropic, AWS Bedrock, Groq, DeepSeek, Mistral, and more)
+- Model aliasing system (use memorable names like `claude`, `gpt-4o`, `gemini`)
 - Secure credential storage (OS vault + encrypted fallback)
 - Cross-platform: Windows, macOS, Linux, WSL2
 - Provider plugin architecture
@@ -23,6 +22,7 @@ ProxyBridge acts as a universal proxy between Claude Code and any LLM provider. 
 
 ### Prerequisites
 
+- **Go 1.23+**: Required for building
 - **Python 3.8+**: Required for LiteLLM
 - **pipx** (recommended): For LiteLLM installation
 - **apt/dnf/yum/pacman/brew/winget**: For system package management
@@ -30,13 +30,14 @@ ProxyBridge acts as a universal proxy between Claude Code and any LLM provider. 
 ### Quick Install
 
 ```bash
-# Install via curl
-curl -fsSL https://proxybridge.com/install.sh | sh
-
-# Or clone and build
+# Clone the repository
 git clone https://github.com/root975638-alt/proxybridge.git
 cd proxybridge
-go build -o proxybridge
+
+# Build the binary
+go build -o proxybridge ./cmd/proxybridge.go
+
+# Install to system path (requires sudo)
 sudo cp proxybridge /usr/local/bin/
 ```
 
@@ -46,10 +47,10 @@ sudo cp proxybridge /usr/local/bin/
 # Install LiteLLM
 pipx install litellm
 
-# Install ProxyBridge
+# Clone and build
 git clone https://github.com/root975638-alt/proxybridge.git
 cd proxybridge
-go build -o proxybridge
+go build -o proxybridge ./cmd/proxybridge.go
 sudo cp proxybridge /usr/local/bin/
 ```
 
@@ -249,7 +250,7 @@ See [docs/plugins.md](docs/plugins.md) for detailed Plugin Development Guide.
 
 MIT License
 
-Copyright (c) 2026 root975638-alt
+Copyright (c) 2026 Anand Damdiyal
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -276,6 +277,6 @@ SOFTWARE.
 
 ## Repository
 
-**Owner**: root975638-alt  
-**URL**: https://github.com/root975638-alt/proxybridge
+**Repository**: https://github.com/root975638-alt/proxybridge  
+**Owner**: Anand Damdiyal  
 **Issues**: https://github.com/root975638-alt/proxybridge/issues

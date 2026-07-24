@@ -1,5 +1,5 @@
 // Package groq provides the Groq provider for ProxyBridge.
-package groq
+package provider
 
 import (
 	"fmt"
@@ -135,6 +135,6 @@ func (p *GroqProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new Groq provider instance.
-func GetProvider() *GroqProvider {
+func GetProvider() Provider {
 	return NewGroqProvider()
 }

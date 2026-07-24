@@ -1,5 +1,5 @@
 // Package xai provides the xAI (Grok) provider for ProxyBridge.
-package xai
+package provider
 
 import (
 	"fmt"
@@ -131,6 +131,6 @@ func (p *XAIProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new xAI provider instance.
-func GetProvider() *XAIProvider {
+func GetProvider() Provider {
 	return NewXAIProvider()
 }

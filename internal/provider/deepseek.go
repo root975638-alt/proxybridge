@@ -1,5 +1,5 @@
 // Package deepseek provides the DeepSeek provider for ProxyBridge.
-package deepseek
+package provider
 
 import (
 	"fmt"
@@ -130,6 +130,6 @@ func (p *DeepSeekProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new DeepSeek provider instance.
-func GetProvider() *DeepSeekProvider {
+func GetProvider() Provider {
 	return NewDeepSeekProvider()
 }

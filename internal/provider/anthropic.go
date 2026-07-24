@@ -1,5 +1,5 @@
 // Package anthropic provides the Anthropic provider for ProxyBridge.
-package anthropic
+package provider
 
 import (
 	"fmt"
@@ -140,6 +140,6 @@ func (p *AnthropicProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new Anthropic provider instance.
-func GetProvider() *AnthropicProvider {
+func GetProvider() Provider {
 	return NewAnthropicProvider()
 }

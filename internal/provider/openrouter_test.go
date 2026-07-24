@@ -1,4 +1,4 @@
-package openrouter
+package provider
 
 import (
 	"os"

@@ -1,5 +1,5 @@
 // Package together provides the Together AI provider for ProxyBridge.
-package together
+package provider
 
 import (
 	"fmt"
@@ -136,6 +136,6 @@ func (p *TogetherAIProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new Together AI provider instance.
-func GetProvider() *TogetherAIProvider {
+func GetProvider() Provider {
 	return NewTogetherAIProvider()
 }

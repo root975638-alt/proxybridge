@@ -1,5 +1,5 @@
 // Package openai provides the OpenAI provider for ProxyBridge.
-package openai
+package provider
 
 import (
 	"fmt"
@@ -146,6 +146,6 @@ func (p *OpenAIProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new OpenAI provider instance.
-func GetProvider() *OpenAIProvider {
+func GetProvider() Provider {
 	return NewOpenAIProvider()
 }

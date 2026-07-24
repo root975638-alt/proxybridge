@@ -1,4 +1,4 @@
-package ollama
+package provider
 
 import (
 	"os/exec"

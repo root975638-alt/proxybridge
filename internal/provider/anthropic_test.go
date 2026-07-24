@@ -1,4 +1,4 @@
-package anthropic
+package provider
 
 import (
 	"os"

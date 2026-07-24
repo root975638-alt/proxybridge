@@ -1,8 +1,8 @@
-package cerebras
+package provider
 
 import (
 	"os"
-	"strings'
+	"strings"
 	"testing"
 )
 

@@ -1,5 +1,5 @@
 // Package cerebras provides the Cerebras provider for ProxyBridge.
-package cerebras
+package provider
 
 import (
 	"fmt"
@@ -130,6 +130,6 @@ func (p *CerebrasProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new Cerebras provider instance.
-func GetProvider() *CerebrasProvider {
+func GetProvider() Provider {
 	return NewCerebrasProvider()
 }

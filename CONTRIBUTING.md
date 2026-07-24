@@ -3,7 +3,7 @@
 Thank you for your interest in contributing to ProxyBridge! This document provides guidelines and instructions for contributing.
 
 **Repository**: https://github.com/root975638-alt/proxybridge  
-**Owner**: root975638-alt  
+**Owner**: Anand Damdiyal  
 **License**: MIT
 
 ## Code of Conduct
@@ -57,7 +57,7 @@ go mod download
 go test ./...
 
 # Build
-go build -o proxybridge
+go build -o proxybridge ./cmd/proxybridge.go
 ```
 
 ## Project Structure
@@ -155,9 +155,8 @@ feat(provider): add support for OpenRouter
 
 ## Questions?
 
-- Join our Discord server (link)
 - Open a GitHub issue at https://github.com/root975638-alt/proxybridge/issues
-- Email maintainers (link)
+- Email maintainers at anand.damdiyal@proxybridge.dev
 
 ## Recognition
 

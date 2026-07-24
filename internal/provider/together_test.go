@@ -1,4 +1,4 @@
-package together
+package provider
 
 import (
 	"os"
