@@ -1,5 +1,5 @@
 // Package fireworks provides the Fireworks AI provider for ProxyBridge.
-package fireworks
+package provider
 
 import (
 	"fmt"
@@ -134,6 +134,6 @@ func (p *FireworksProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new Fireworks AI provider instance.
-func GetProvider() *FireworksProvider {
+func GetProvider() Provider {
 	return NewFireworksProvider()
 }

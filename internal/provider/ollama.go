@@ -1,5 +1,5 @@
 // Package ollama provides the Ollama provider for ProxyBridge.
-package ollama
+package provider
 
 import (
 	"fmt"
@@ -172,6 +172,6 @@ func (p *OllamaProvider) testModels() error {
 }
 
 // GetProvider creates a new Ollama provider instance.
-func GetProvider() *OllamaProvider {
+func GetProvider() Provider {
 	return NewOllamaProvider()
 }

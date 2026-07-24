@@ -1,5 +1,5 @@
 // Package mistral provides the Mistral AI provider for ProxyBridge.
-package mistral
+package provider
 
 import (
 	"fmt"
@@ -135,6 +135,6 @@ func (p *MistralProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new Mistral provider instance.
-func GetProvider() *MistralProvider {
+func GetProvider() Provider {
 	return NewMistralProvider()
 }

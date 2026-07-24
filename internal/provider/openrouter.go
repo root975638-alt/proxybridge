@@ -1,5 +1,5 @@
 // Package openrouter provides the OpenRouter provider for ProxyBridge.
-package openrouter
+package provider
 
 import (
 	"fmt"
@@ -140,6 +140,6 @@ func (p *OpenRouterProvider) testAPIKey(apiKey string) error {
 }
 
 // GetProvider creates a new OpenRouter provider instance.
-func GetProvider() *OpenRouterProvider {
+func GetProvider() Provider {
 	return NewOpenRouterProvider()
 }

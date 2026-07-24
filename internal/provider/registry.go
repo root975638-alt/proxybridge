@@ -1,29 +1,8 @@
 // Package provider provides a central registry for all providers.
 package provider
 
-import (
-	// Import all provider implementations
-	_ "github.com/proxybridge/cli/internal/provider/aws"
-	_ "github.com/proxybridge/cli/internal/provider/google"
-	_ "github.com/proxybridge/cli/internal/provider/azure"
-	"github.com/proxybridge/cli/internal/provider"
-	"github.com/proxybridge/cli/internal/provider/anthropic"
-	"github.com/proxybridge/cli/internal/provider/deepseek"
-	"github.com/proxybridge/cli/internal/provider/fireworks"
-	"github.com/proxybridge/cli/internal/provider/groq"
-	"github.com/proxybridge/cli/internal/provider/local"
-	"github.com/proxybridge/cli/internal/provider/lmstudio"
-	"github.com/proxybridge/cli/internal/provider/mistral"
-	"github.com/proxybridge/cli/internal/provider/ollama"
-	"github.com/proxybridge/cli/internal/provider/openai"
-	"github.com/proxybridge/cli/internal/provider/openrouter"
-	"github.com/proxybridge/cli/internal/provider/together"
-	"github.com/proxybridge/cli/internal/provider/xai"
-	"github.com/proxybridge/cli/internal/provider/cerebras"
-)
-
 // Registry holds all registered providers
-var Registry = provider.NewProviderRegistry()
+var Registry = NewProviderRegistry()
 
 func init() {
 	// Register all providers
@@ -38,28 +17,28 @@ func registerProviders() {
 
 	providers := []Provider{
 		// Cloud providers
-		openai.GetProvider(),
-		anthropic.GetProvider(),
-		azure.GetProvider(),
-		google.GetProvider(),
-		openrouter.GetProvider(),
-		xai.GetProvider(),
+		NewOpenAIProvider(),
+		NewAnthropicProvider(),
+		NewAzureOpenAIProvider(),
+		NewGoogleGeminiProvider(),
+		NewOpenRouterProvider(),
+		NewXAIProvider(),
 
 		// Alternative cloud providers
-		groq.GetProvider(),
-		deepseek.GetProvider(),
-		mistral.GetProvider(),
-		together.GetProvider(),
-		fireworks.GetProvider(),
-		cerebras.GetProvider(),
+		NewGroqProvider(),
+		NewDeepSeekProvider(),
+		NewMistralProvider(),
+		NewTogetherAIProvider(),
+		NewFireworksProvider(),
+		NewCerebrasProvider(),
 
 		// Local/On-premise providers
-		ollama.GetProvider(),
-		lmstudio.GetProvider(),
-		local.GetProvider(),
+		NewOllamaProvider(),
+		NewLMStudioProvider(),
+		NewLocalOpenAIProvider(),
 
 		// AWS-specific
-		aws.GetProvider(),
+		NewAWSBedrockProvider(),
 	}
 
 	for _, p := range providers {
@@ -79,28 +58,28 @@ func NewProviderRegistry() *ProviderRegistry {
 // registerProvidersInRegistry registers all providers into a given registry
 func registerProvidersInRegistry(reg *ProviderRegistry) {
 	// Cloud providers
-	_ = reg.RegisterProvider(openai.GetProvider())
-	_ = reg.RegisterProvider(anthropic.GetProvider())
-	_ = reg.RegisterProvider(azure.GetProvider())
-	_ = reg.RegisterProvider(google.GetProvider())
-	_ = reg.RegisterProvider(openrouter.GetProvider())
-	_ = reg.RegisterProvider(xai.GetProvider())
+	_ = reg.RegisterProvider(NewOpenAIProvider())
+	_ = reg.RegisterProvider(NewAnthropicProvider())
+	_ = reg.RegisterProvider(NewAzureOpenAIProvider())
+	_ = reg.RegisterProvider(NewGoogleGeminiProvider())
+	_ = reg.RegisterProvider(NewOpenRouterProvider())
+	_ = reg.RegisterProvider(NewXAIProvider())
 
 	// Alternative cloud providers
-	_ = reg.RegisterProvider(groq.GetProvider())
-	_ = reg.RegisterProvider(deepseek.GetProvider())
-	_ = reg.RegisterProvider(mistral.GetProvider())
-	_ = reg.RegisterProvider(together.GetProvider())
-	_ = reg.RegisterProvider(fireworks.GetProvider())
-	_ = reg.RegisterProvider(cerebras.GetProvider())
+	_ = reg.RegisterProvider(NewGroqProvider())
+	_ = reg.RegisterProvider(NewDeepSeekProvider())
+	_ = reg.RegisterProvider(NewMistralProvider())
+	_ = reg.RegisterProvider(NewTogetherAIProvider())
+	_ = reg.RegisterProvider(NewFireworksProvider())
+	_ = reg.RegisterProvider(NewCerebrasProvider())
 
 	// Local/On-premise providers
-	_ = reg.RegisterProvider(ollama.GetProvider())
-	_ = reg.RegisterProvider(lmstudio.GetProvider())
-	_ = reg.RegisterProvider(local.GetProvider())
+	_ = reg.RegisterProvider(NewOllamaProvider())
+	_ = reg.RegisterProvider(NewLMStudioProvider())
+	_ = reg.RegisterProvider(NewLocalOpenAIProvider())
 
 	// AWS-specific
-	_ = reg.RegisterProvider(aws.GetProvider())
+	_ = reg.RegisterProvider(NewAWSBedrockProvider())
 }
 
 // GetProvider returns a provider by ID

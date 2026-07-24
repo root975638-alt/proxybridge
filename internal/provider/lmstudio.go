@@ -1,5 +1,5 @@
 // Package lmstudio provides the LM Studio provider for ProxyBridge.
-package lmstudio
+package provider
 
 import (
 	"fmt"
@@ -130,6 +130,6 @@ func (p *LMStudioProvider) SetBaseURL(url string) {
 }
 
 // GetProvider creates a new LM Studio provider instance.
-func GetProvider() *LMStudioProvider {
+func GetProvider() Provider {
 	return NewLMStudioProvider()
 }

@@ -1,4 +1,4 @@
-package fireworks
+package provider
 
 import (
 	"os"

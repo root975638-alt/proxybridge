@@ -1,4 +1,4 @@
-package lmstudio
+package provider
 
 import (
 	"testing"

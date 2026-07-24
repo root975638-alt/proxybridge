@@ -15,7 +15,7 @@ import (
 	"github.com/proxybridge/cli/internal/diagnostic"
 	"github.com/proxybridge/cli/internal/logging"
 	"github.com/proxybridge/cli/internal/provider"
-	"github.com/proxybridge/cli/internal/util/detection"
+	"github.com/proxybridge/cli/pkg/detection"
 	"github.com/proxybridge/cli/pkg/manager/litellm"
 	"github.com/proxybridge/cli/pkg/manager/claude"
 	"github.com/proxybridge/cli/pkg/template"

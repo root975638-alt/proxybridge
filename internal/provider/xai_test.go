@@ -1,4 +1,4 @@
-package xai
+package provider
 
 import (
 	"os"
