@@ -1,0 +1,76 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: true
+
+      - name: Generate Version Info
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/}
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Tag: ${VERSION}"
+
+      - name: Cross Compile
+        run: |
+          # Create bin directory
+          mkdir -p bin
+
+          # Linux
+          GOOS=linux GOARCH=amd64 go build -o bin/proxybridge-linux-amd64
+          GOOS=linux GOARCH=arm64 go build -o bin/proxybridge-linux-arm64
+
+          # macOS
+          GOOS=darwin GOARCH=amd64 go build -o bin/proxybridge-darwin-amd64
+          GOOS=darwin GOARCH=arm64 go build -o bin/proxybridge-darwin-arm64
+
+          # Windows
+          GOOS=windows GOARCH=amd64 go build -o bin/proxybridge-windows-amd64.exe
+          GOOS=windows GOARCH=arm64 go build -o bin/proxybridge-windows-arm64.exe
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ steps.version.outputs.VERSION }}
+          tag_name: ${{ github.ref }}
+          generate_release_notes: true
+          files: |
+            bin/proxybridge-linux-amd64
+            bin/proxybridge-linux-arm64
+            bin/proxybridge-darwin-amd64
+            bin/proxybridge-darwin-arm64
+            bin/proxybridge-windows-amd64.exe
+            bin/proxybridge-windows-arm64.exe
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: proxybridge-binaries-${{ steps.version.outputs.VERSION }}
+          path: bin/
+          retention-days: 30
+
+      - name: Update Homebrew Tap
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: |
+          echo "To update Homebrew, run:"
+          echo "brew bump-cask-pr proxybridge --version=${{ steps.version.outputs.VERSION }}"
+        shell: bash
